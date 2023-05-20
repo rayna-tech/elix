@@ -16,7 +16,7 @@ Currently elix only supports web api requests ([sockets will be coming later](#p
 git clone https://github.com/rayna-tech/elix
 cd elix
 docker build -t elix .
-docker run -it -p 8080:8080 --name="elix" elix
+docker run -it -d -p 8080:8080 --name="elix" elix
 docker logs -f <PROVIDED_DOCKER_ID>
 ```
 
