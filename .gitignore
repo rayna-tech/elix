@@ -1,2 +1,3 @@
 elix.json
 packages/**/node_modules
+packages/**/dist
