@@ -1,7 +1,15 @@
-FROM alpine:latest
-
-COPY elix.exe /app/elix.exe
+FROM golang:1.20.1-alpine
 
 WORKDIR /app
+COPY go.mod .
+COPY go.sum .
 
-CMD ["./elix.exe"]
+RUN go mod download
+
+COPY . .
+
+RUN go build -o elix
+
+EXPOSE 8080
+
+CMD ["./elix"]
