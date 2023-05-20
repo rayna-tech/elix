@@ -19,6 +19,24 @@ docker build -t elix .
 docker run -it -p 8080:8080 --name="elix" elix
 docker logs -f <PROVIDED_DOCKER_ID>
 ```
+
+### 💻 Self Hosting (Source Code)
+
+```sh
+git clone https://github.com/rayna-tech/elix
+cd elix
+mv .env.example .env
+# Fill out the .env -----
+go build elix
+./elix.exe
+```
+
+*or*
+
+1. Download the exe and .env file from the [releases page.](https://github.com/rayna-tech/elix/releases/)
+2. Fill out the .env with all necessary details.
+3. Execute the exe file
+
 ---
 ### 📑 Plans
 
