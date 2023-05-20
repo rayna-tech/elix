@@ -46,7 +46,7 @@ export default class Client {
       ).error();
     } else {
       Logger(
-        `Key: ${key} has been assigned to the value: ${JSON.stringify(value)}`
+        `Key: \"${key}\" has been assigned to the value: ${JSON.stringify(value)}`
       );
     }
   }
@@ -119,10 +119,42 @@ export default class Client {
         `Error deleted pair in store. Please check the db server terminal for more information.`
       ).error();
     } else {
-      Logger(`Pair: ${key} has been deleted.`).info();
+      Logger(`Pair: \"${key}\" has been deleted.`).info();
     }
   }
 
+  async update(key: string, value: any) {
+    const req = await axios
+      .post(
+        `${this.options.url}/update`,
+        JSON.stringify({
+          key: key,
+          store: value,
+        })
+      )
+      .then((r) => {
+        return {
+          ok: true,
+          data: r.data,
+        };
+      })
+      .catch((r) => {
+        return {
+          ok: false,
+          reason: `${r}`,
+        };
+      });
+    if (!req.ok) {
+      //@ts-ignore
+      Logger(
+        `Error reassigning key value. Please check the db server terminal for more information.`
+      ).error();
+    } else {
+      Logger(
+        `Key: \"${key}\" has had a new value assigned to it.`
+      );
+    }
+  }
   seed() {
     this.options.seedData.forEach((seed) => {
       this.set(seed.key, seed.value);

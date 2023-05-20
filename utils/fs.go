@@ -153,3 +153,38 @@ func FSClearStore(storeName string) {
 	}
 	Logger.Info("Store file has been cleared/reset.")
 }
+
+func FSUpdateValue(storeName string, key string, value interface{}) bool {
+	sN := fmt.Sprintf("%s.json", storeName)
+	data, err := ioutil.ReadFile(sN)
+	if err != nil {
+		Logger.Error("Failed to read store.")
+		return true
+	}
+
+	var stores map[string]interface{}
+	err = json.Unmarshal(data, &stores)
+	if err != nil {
+		Logger.Error("Error unmarshaling store.")
+		return true
+	}
+	if _, ok := stores[key]; ok == false {
+		Logger.Error(fmt.Sprintf("Store doesnt contain key. Key: %s", key))
+		return true
+	}
+	stores[key] = value
+	jsonData, err := json.MarshalIndent(stores, "", " ")
+	if err != nil {
+		Logger.Error("Error remarshaling store.")
+		return true
+	}
+
+	err = ioutil.WriteFile(sN, jsonData, 0644)
+	if err != nil {
+		Logger.Error("Failed to update store.")
+		return true
+	}
+
+	Logger.Info(fmt.Sprintf("Updated previous key value. Key: %s", key))
+	return false
+}

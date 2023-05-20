@@ -14,6 +14,7 @@ func Server(port interface{}) {
 	router := mux.NewRouter()
 	router.HandleFunc("/get/{key}", Get)
 	router.HandleFunc("/new", Post)
+	router.HandleFunc("/update", ReValutate)
 	router.HandleFunc("/delete", Delete)
 	router.HandleFunc("/clear", Clear)
 	err := http.ListenAndServe(fmt.Sprintf(":%v", port), router)
