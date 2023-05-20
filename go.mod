@@ -7,6 +7,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.7.1
 	github.com/charmbracelet/log v0.2.1
 	github.com/gorilla/mux v1.8.0
+	github.com/joho/godotenv v1.5.1
 )
 
 require (

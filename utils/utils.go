@@ -20,7 +20,6 @@ var (
 	HiddenMessage = lipgloss.NewStyle().Italic(true).Foreground(lipgloss.Color("#212529"))
 )
 
-
 func ServerPort() string {
 	args := os.Args[1:]
 	if len(args) >= 1 {

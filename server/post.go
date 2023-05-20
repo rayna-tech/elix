@@ -6,12 +6,19 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 func Post(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
 		return
+	}
+	authHeader := r.Header.Get("Authorization")
+	authToken := os.Getenv("AUTH_TOKEN")
+	if authHeader != authToken {
+		http.Error(w, "Unauthorized.", http.StatusUnauthorized)
+		return;
 	}
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

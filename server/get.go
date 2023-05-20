@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -14,6 +15,14 @@ func Get(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
 		return
 	}
+	
+	authHeader := r.Header.Get("Authorization")
+	authToken := os.Getenv("AUTH_TOKEN")
+	if authHeader != authToken {
+		http.Error(w, "Unauthorized.", http.StatusUnauthorized)
+		return;
+	}
+
 	vars := mux.Vars(r)
 	key := vars["key"]
 	if utils.Included([]string{"favicon.ico"}, key) {
