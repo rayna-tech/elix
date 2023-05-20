@@ -15,6 +15,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	}
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
+		utils.Logger.Error("Error reading request body.")
 		http.Error(w, "Error reading request body.", http.StatusBadRequest)
 		return
 	}
@@ -22,16 +23,19 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	var reqBody utils.KeyStorePair
 	err = json.Unmarshal(body, &reqBody)
 	if err != nil {
+		utils.Logger.Error("Error parsing request body.")
 		http.Error(w, "Error parsing request body.", http.StatusBadRequest)
 		return
 	}
 
 	if reqBody.Key == "" {
+		utils.Logger.Error("Key value is required.")
 		http.Error(w, "Key value is required.", http.StatusBadRequest)
 		return
 	}
 
 	if reqBody.Store == nil {
+		utils.Logger.Error("Store value is required.")
 		http.Error(w, "Store value is required.", http.StatusBadRequest)
 		return
 	}

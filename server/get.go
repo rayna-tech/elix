@@ -2,6 +2,7 @@ package server
 
 import (
 	"elix/utils"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -19,7 +20,13 @@ func Get(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(fmt.Sprintf("ElixDB")))
 	} else {
 		value := utils.FSGetViaKey("elix", key)
-		w.Write([]byte(fmt.Sprintf("%v", value)))
-		
+		jsonData, err := json.Marshal(value)
+		if err != nil {
+			http.Error(w, "Error parsing json to string.", http.StatusMethodNotAllowed)
+			utils.Logger.Error("Error parsing json to string.")
+			return
+		}
+		w.Write([]byte(fmt.Sprintf("%v", string(jsonData))))
+
 	}
 }

@@ -1,0 +1,27 @@
+{
+  "name": "elixdb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "postinstall": "autodts link",
+    "prepublish": "tsc && autodts generate",
+    "test": "node test/test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "typescript": {
+    "definition": "index.d.ts"
+  },
+  "dependencies": {
+    "autodts": "^0.0.6",
+    "axios": "^1.4.0",
+    "chalk": "2.4.1"
+  },
+  "devDependencies": {
+    "@lib/autodts-generator": "^0.0.2",
+    "@types/node": "^20.2.1",
+    "typescript": "^5.0.4"
+  }
+}

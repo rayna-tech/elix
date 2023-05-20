@@ -11,10 +11,12 @@ import (
 func Delete(w http.ResponseWriter, r *http.Request) {
 	key := r.URL.Query().Get("key")
 	if key == "" {
+		utils.Logger.Error("Key value is required.")
 		http.Error(w, "Key value is required.", http.StatusBadRequest)
 		return
 	}
 	if utils.FSStoreContainsKey("elix", key) {
+		utils.Logger.Error(fmt.Sprintf( "Store doesnt contain key: %s", key))
 		http.Error(w, fmt.Sprintf( "Store doesnt contain key: %s. Check the terminal for more information.", key), http.StatusBadRequest)
 		return
 	}
